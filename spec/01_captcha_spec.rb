@@ -1,4 +1,4 @@
-require 'captcha'
+require '01_captcha'
 
 RSpec.describe Captcha do
 

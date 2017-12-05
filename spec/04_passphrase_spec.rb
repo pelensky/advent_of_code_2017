@@ -1,4 +1,4 @@
-require 'passphrase'
+require '04_passphrase'
 
 RSpec.describe Passphrase do
 
@@ -12,7 +12,7 @@ RSpec.describe Passphrase do
                             "fhaa qwy vqbq gsswej lxr yzl wakcige mwjrl",
                             "bhnlow huqa gtbjc gvj wrkyr jgvmhj bgs umo ikbpdto"]
 
-  input = File.read(File.join(File.dirname(__FILE__), '../lib/input.txt'))
+  input = File.read(File.join(File.dirname(__FILE__), '../input/04.txt'))
 
   it "breaks passwords apart" do
     expect(passphrase.split_passphrases(passphrases)).to eq individual_passphrases

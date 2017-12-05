@@ -1,4 +1,4 @@
-require 'corruption_checksum'
+require '02_corruption_checksum'
 
 RSpec.describe CorruptionChecksum do
   subject(:checksum) { described_class.new }
