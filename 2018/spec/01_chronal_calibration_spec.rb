@@ -23,14 +23,8 @@ RSpec.describe ChronalCalibration do
     expect(chronal_calibration.find_frequency(change)).to eq 15
   end
 
-  it 'gets numbers out of a text file' do
-    filename = './input/test_data.txt'
-    result = [-8, -13, 17, 7, 12]
-    expect(chronal_calibration.read_file(filename)).to eq result
-  end
-
   it 'sums the numbers from a text file' do
-    filename = './input/test_data.txt'
+    filename = './input/test_integer_data.txt'
     expect(chronal_calibration.calibrate_frequency(filename)).to eq 15
   end
 
@@ -77,9 +71,9 @@ RSpec.describe ChronalCalibration do
     expect(chronal_calibration.find_first_frequency_reached_twice(change)).to eq 14
   end
 
-  it 'finds the first duplicated element in an array from a file' do
-    filename = './input/01_chronal_calibration_input.txt'
-    expect(chronal_calibration.first_duplicate_from_file(filename)).to eq 70357
-  end
+  # it 'finds the first duplicated element in an array from a file' do
+  #   filename = './input/01_chronal_calibration_input.txt'
+  #   expect(chronal_calibration.first_duplicate_from_file(filename)).to eq 70357
+  # end
 
 end

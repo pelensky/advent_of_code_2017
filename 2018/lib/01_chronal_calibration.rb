@@ -1,7 +1,9 @@
+require 'utils'
+
 class ChronalCalibration
 
   def calibrate_frequency(file)
-    data = read_file(file)
+    data = Utils.read_integers_from_file(file)
     find_frequency(data)
   end
 
@@ -35,11 +37,6 @@ class ChronalCalibration
     frequencies
   end
 
-  def read_file(file)
-    data = File.readlines(file)
-    data.map { |line| line.to_i }
-  end
-
   def duplicate?(frequency)
     frequency.length == frequency.uniq.length
   end
@@ -49,7 +46,7 @@ class ChronalCalibration
   end
 
   def first_duplicate_from_file(filename)
-    list = read_file(filename)
+    list = Utils.read_integers_from_file(filename)
     find_first_frequency_reached_twice(list)
   end
 
