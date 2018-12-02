@@ -38,5 +38,28 @@ RSpec.describe InventoryManagement do
     expect(inventory_management.check_sum_from_file(filename)).to eq 6200
   end
 
+  it 'finds words that are different by one character' do
+    data = ['abcde', 'fghij', 'klmno', 'pqrst', 'fguij', 'axcye', 'wvxyz']
+    result = ['fghij', 'fguij']
+    expect(inventory_management.find_words_that_differ_by_one_character(data)).to eq result
+  end
+
+  it 'finds the position of the different letters' do
+    data = ['fghij', 'fguij']
+    result = 2
+    expect(inventory_management.find_different_letter_position(data)).to eq result
+  end
+
+  it 'removes the character from the words' do
+    data = ['fghij', 'fguij']
+    result = 'fgij'
+    expect(inventory_management.delete_wrong_letter(data)).to eq result
+  end
+
+  it 'solves q2' do
+    filename = './input/02_inventory_management_system_input.txt'
+    result = 'xpysnnkqrbuhefmcajodplyzw'
+    expect(inventory_management.check_correct_box_id(filename)).to eq result
+  end
 
 end

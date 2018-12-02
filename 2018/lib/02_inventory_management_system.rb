@@ -45,4 +45,46 @@ class InventoryManagement
     words = Utils.read_words_from_file(filename)
     multiply_twos_and_threes(words)
   end
+
+  def find_words_that_differ_by_one_character(words)
+    chosen_words = []
+    words.each do |word_testing|
+      words.each do |word_comparing|
+        count = 0
+        word_testing.each_char.with_index do |char, index|
+
+          if char != word_comparing[index]
+            count += 1
+          end
+
+          if count == 1 && index == word_testing.length - 1
+            chosen_words << [word_testing, word_comparing]
+          end
+
+        end
+      end
+    end
+    chosen_words.flatten.uniq
+  end
+
+  def find_different_letter_position(words)
+    words[0].each_char.with_index do |char, index|
+      if char != words[1][index]
+        return index
+      end
+    end
+  end
+
+  def delete_wrong_letter(words)
+    index = find_different_letter_position(words)
+    words[0].slice!(index)
+    words[0]
+  end
+
+  def check_correct_box_id(filename)
+    words = Utils.read_words_from_file(filename)
+    key_words = find_words_that_differ_by_one_character(words)
+    delete_wrong_letter(key_words)
+  end
+
 end
