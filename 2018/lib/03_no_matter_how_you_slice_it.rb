@@ -16,7 +16,7 @@ class Claim
   def add_coordinates(claim, fabric = [])
     (claim[:top]...claim[:top] + claim[:height]).each do |y|
       (claim[:left]...claim[:left] + claim[:width]).each do |x|
-        fabric << [y, x]
+        fabric << {id: claim[:id], coordinates: [y, x]}
       end
     end
     fabric
@@ -30,12 +30,23 @@ class Claim
       add_coordinates(claim, fabric)
     end
 
-    fabric.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
-    # fabric.select{|v| fabric.count(v) > 1}.uniq
+    fabric.group_by{ |e| e[:coordinates] }.select { |k, v| v.size > 1 }.map(&:first)
   end
 
   def count_overlap(claims)
     see_overlap(claims).length
+  end
+
+  def see_where_no_overlap(claims)
+    fabric = []
+    transformed_claims = transform_claims(claims)
+
+    transformed_claims.each do |claim|
+      add_coordinates(claim, fabric)
+    end
+
+    p fabric.group_by{ |e| e }.select { |k, v| v.size <= 1 }.map(&:first)
+    fabric.group_by{ |e| e[:coordinates] }.select { |k, v| v.size <= 1 }.map(&:first)
   end
 
   def see_how_much_fabric_overlaps(filename)
