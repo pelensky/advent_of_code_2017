@@ -54,11 +54,11 @@ RSpec.describe Claim do
   #   expect(claim.see_how_much_fabric_overlaps(filename)).to eq 120419
   # end
   #
-  it 'finds the claim that does not overlap' do
-    data = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
-   result = 3
-
-    expect(claim.see_where_no_overlap(data)).to eq result
-  end
+  # it 'finds the claim that does not overlap' do
+  #   data = ['#1 @ 1,3: 4x4', '#2 @ 3,1: 4x4', '#3 @ 5,5: 2x2']
+  #  result = 3
+  #
+  #   expect(claim.see_where_no_overlap(data)).to eq result
+  # end
 
 end
