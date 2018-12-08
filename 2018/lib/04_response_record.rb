@@ -119,8 +119,10 @@ class ResponseRecord
 
   def find_sleep_minutes(record)
     asleep_minutes = []
-    record[:asleep].each_with_index do |sleep, index|
-      asleep_minutes << (sleep...record[:awake][index]).to_a
+    if record[:asleep]
+      record[:asleep].each_with_index do |sleep, index|
+        asleep_minutes << (sleep...record[:awake][index]).to_a
+      end
     end
     asleep_minutes.flatten
   end
