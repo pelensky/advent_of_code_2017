@@ -97,7 +97,8 @@ RSpec.describe ResponseRecord do
           36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
           51, 52, 53, 54
         ],
-        most_likely_minute: 24
+        most_likely_minute: 24,
+        number_of_times_on_that_minute: 2
       },
       99 => {
         time_asleep: 30,
@@ -105,7 +106,8 @@ RSpec.describe ResponseRecord do
           36, 37, 38, 39, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44, 45,
           45, 45, 46, 46, 47, 47, 48, 48, 49, 49, 50, 51, 52, 53, 54
         ],
-        most_likely_minute: 45
+        most_likely_minute: 45,
+        number_of_times_on_that_minute: 3
       }
     }
 
@@ -136,9 +138,39 @@ RSpec.describe ResponseRecord do
     expect(response_record.find_sleepiest_guard_and_minute(data)).to eq result
   end
 
-  it 'solvles the riddle' do
+  it 'multiplies the id of the most consistently asleep guard by the minute' do
+    data = [
+      '[1518-11-01 00:00] Guard #10 begins shift',
+      '[1518-11-01 00:05] falls asleep',
+      '[1518-11-01 00:25] wakes up',
+      '[1518-11-01 00:30] falls asleep',
+      '[1518-11-01 00:55] wakes up',
+      '[1518-11-01 23:58] Guard #99 begins shift',
+      '[1518-11-02 00:40] falls asleep',
+      '[1518-11-02 00:50] wakes up',
+      '[1518-11-03 00:05] Guard #10 begins shift',
+      '[1518-11-03 00:24] falls asleep',
+      '[1518-11-03 00:29] wakes up',
+      '[1518-11-04 00:02] Guard #99 begins shift',
+      '[1518-11-04 00:36] falls asleep',
+      '[1518-11-04 00:46] wakes up',
+      '[1518-11-05 00:03] Guard #99 begins shift',
+      '[1518-11-05 00:45] falls asleep',
+      '[1518-11-05 00:55] wakes up',
+    ]
+    result = 99 * 45
+    expect(response_record.find_most_consistently_asleep_guard_and_minute(data)).to eq result
+  end
+
+  it 'solvles q1' do
     filename = './input/04_response_record_input.txt'
     expect(response_record.solve_q1(filename)).to eq 8421
+  end
+
+  it 'solvles q1' do
+    filename = './input/04_response_record_input.txt'
+    expect(response_record.solve_q2(filename)).to eq 83359
+
   end
 
 end

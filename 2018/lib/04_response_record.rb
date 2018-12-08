@@ -38,6 +38,7 @@ class ResponseRecord
     end
     guard_data.each do |k, v|
       guard_data[k][:most_likely_minute] = guard_data[k][:minutes_asleep].max_by { |i| guard_data[k][:minutes_asleep].count(i) }
+      guard_data[k][:number_of_times_on_that_minute] = guard_data[k][:minutes_asleep].count(guard_data[k][:most_likely_minute])
     end
     guard_data
   end
@@ -51,6 +52,17 @@ class ResponseRecord
   def solve_q1(filename)
     records = Utils.read_words_from_file(filename)
     find_sleepiest_guard_and_minute(records)
+  end
+
+  def find_most_consistently_asleep_guard_and_minute(records)
+    guard_data = find_sleepiest_guard(records)
+    guard = guard_data.max_by {|k, v| v[:number_of_times_on_that_minute] }
+    guard[0] * guard[1][:most_likely_minute]
+  end
+
+  def solve_q2(filename)
+    records = Utils.read_words_from_file(filename)
+    find_most_consistently_asleep_guard_and_minute(records)
   end
 
   private
