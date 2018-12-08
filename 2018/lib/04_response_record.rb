@@ -38,84 +38,89 @@ class ResponseRecord
       guard_data[k][:most_likely_minute] = guard_data[k][:minutes_asleep].max_by { |i| guard_data[k][:minutes_asleep].count(i) }
     end
     guard_data
-
   end
 
-  private
-
-  def convert_time(time_stamp, date)
-    split_date = date.split('-')
-    y = split_date[0]
-    m = split_date[1]
-    d = split_date[2].to_i
-    hour = time_stamp.split(':')[0].to_i
-    minute = time_stamp.split(':')[1].to_i
-    if hour == 23
-      ["#{y}-#{m}-#{d + 1}", -(60 - minute)]
-    else
-      ["#{y}-#{m}-#{d}", (ONE_HOUR * hour) + minute]
-    end
+  def find_sleepiest_guard_and_minute(records)
+    guard_data = find_sleepiest_guard(records)
+    guard = guard_data.max_by {|k, v| v[:time_asleep] }
+    guard[0] * guard[1][:most_likely_minute]
   end
 
-  def add_guard(records, date, time, info)
-    guard = info.split(' ')[1][1..-1].to_i
-    if records[date]
-      records[date][:guard] = guard
-    else
-      records[date] = { guard: guard }
-    end
-    records[date][:begin_shift] = time
-    records
-  end
+private
 
-  def add_sleep_time(records, date, time)
-    records = add_date_entry(records, date)
-    if records[date][:asleep]
-      records[date][:asleep] << time
-    else
-      records[date][:asleep] = [time]
-    end
-    records[date][:asleep].sort!
-    records
+def convert_time(time_stamp, date)
+  split_date = date.split('-')
+  y = split_date[0]
+  m = split_date[1]
+  d = split_date[2].to_i
+  hour = time_stamp.split(':')[0].to_i
+  minute = time_stamp.split(':')[1].to_i
+  if hour == 23
+    ["#{y}-#{m}-#{d + 1}", -(60 - minute)]
+  else
+    ["#{y}-#{m}-#{d}", (ONE_HOUR * hour) + minute]
   end
+end
 
-  def add_awake_time(records, date, time)
-    records = add_date_entry(records, date)
-    if records[date][:awake]
-      records[date][:awake] << time
-    else
-      records[date][:awake] = [time]
-    end
-    records[date][:awake].sort!
-    records
+def add_guard(records, date, time, info)
+  guard = info.split(' ')[1][1..-1].to_i
+  if records[date]
+    records[date][:guard] = guard
+  else
+    records[date] = { guard: guard }
   end
+  records[date][:begin_shift] = time
+  records
+end
 
-  def add_date_entry(records, date)
-    records[date] = {} unless records[date]
-    records
+def add_sleep_time(records, date, time)
+  records = add_date_entry(records, date)
+  if records[date][:asleep]
+    records[date][:asleep] << time
+  else
+    records[date][:asleep] = [time]
   end
+  records[date][:asleep].sort!
+  records
+end
 
-  def find_sleep_time(record)
-    minutes_asleep = 0
-    record[:asleep].each_with_index do |sleep, index|
-      minutes_asleep += record[:awake][index] - sleep
-    end
-    minutes_asleep
+def add_awake_time(records, date, time)
+  records = add_date_entry(records, date)
+  if records[date][:awake]
+    records[date][:awake] << time
+  else
+    records[date][:awake] = [time]
   end
+  records[date][:awake].sort!
+  records
+end
 
-  def find_sleep_minutes(record)
-    asleep_minutes = []
-    record[:asleep].each_with_index do |sleep, index|
-      asleep_minutes << (sleep...record[:awake][index]).to_a
-    end
-    asleep_minutes.flatten
-  end
+def add_date_entry(records, date)
+  records[date] = {} unless records[date]
+  records
+end
 
-  def transform_and_add_sleep_data(records)
-    transformed = transform(records)
-    transformed.each do |k, v|
-      transformed[k] = add_sleep_data(v)
-    end
-    transformed
+def find_sleep_time(record)
+  minutes_asleep = 0
+  record[:asleep].each_with_index do |sleep, index|
+    minutes_asleep += record[:awake][index] - sleep
   end
+  minutes_asleep
+end
+
+def find_sleep_minutes(record)
+  asleep_minutes = []
+  record[:asleep].each_with_index do |sleep, index|
+    asleep_minutes << (sleep...record[:awake][index]).to_a
+  end
+  asleep_minutes.flatten
+end
+
+def transform_and_add_sleep_data(records)
+  transformed = transform(records)
+  transformed.each do |k, v|
+    transformed[k] = add_sleep_data(v)
+  end
+  transformed
+end
 end
