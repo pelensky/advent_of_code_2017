@@ -18,6 +18,22 @@ class ResponseRecord
     records
   end
 
+  def find_sleep_time(record)
+    minutes_asleep = 0
+    record[:asleep].each_with_index do |sleep, index|
+      minutes_asleep += record[:awake][index] - sleep
+    end
+    minutes_asleep
+  end
+
+  def find_sleep_minutes(record)
+    asleep_minutes = []
+    record[:asleep].each_with_index do |sleep, index|
+      asleep_minutes << (sleep...record[:awake][index]).to_a
+    end
+    asleep_minutes.flatten
+  end
+
   private
 
   def convert_time(time_stamp, date)
