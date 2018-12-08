@@ -134,7 +134,11 @@ RSpec.describe ResponseRecord do
     ]
     result = 10 * 24
     expect(response_record.find_sleepiest_guard_and_minute(data)).to eq result
-
   end
+
+  # it 'solvles the riddle' do
+  #   filename = './input/04_response_record_input.txt'
+  #   expect(response_record.solve_q1(filename)).to eq 100
+  # end
 
 end
