@@ -22,11 +22,26 @@ RSpec.describe ChronalCoordinates do
   end
 
   it 'creates a grid with offsets' do
-    number_of_columns = 9 - 1
-    number_of_rows = 8 - 1
-    expect(chronal_coordinates.create_grid(coordinates)[:x_offset]).to eq 1
-    expect(chronal_coordinates.create_grid(coordinates)[:y_offset]).to eq 1
-    expect(chronal_coordinates.create_grid(coordinates)[:grid].length).to eq number_of_columns
-    expect(chronal_coordinates.create_grid(coordinates)[:grid][0].length).to eq number_of_rows
+    number_of_columns = 9
+    number_of_rows = 8
+    expect(chronal_coordinates.create_grid_with_offsets(coordinates)[:x_offset]).to eq 1
+    expect(chronal_coordinates.create_grid_with_offsets(coordinates)[:y_offset]).to eq 1
+    expect(chronal_coordinates.create_grid_with_offsets(coordinates)[:grid].length).to eq number_of_columns
+    expect(chronal_coordinates.create_grid_with_offsets(coordinates)[:grid][0].length).to eq number_of_rows
+  end
+
+  it 'plots the coordinates' do
+    result = [
+      ['COORDINATE 0', [], [], [], [], [], [], []],
+      [[], [], [], [], [], [], [], []],
+      [[], [], [], [], [], [], [], 'COORDINATE 2'],
+      [[], [], 'COORDINATE 3', [], [], [], [], []],
+      [[], [], [], [], 'COORDINATE 4', [], [], []],
+      ['COORDINATE 1', [], [], [], [], [], [], []],
+      [[], [], [], [], [], [], [], []],
+      [[], [], [], [], [], [], [], []],
+      [[], [], [], [], [], [], [], 'COORDINATE 5']
+    ]
+    expect(chronal_coordinates.plot(coordinates)[:grid]).to eq result
   end
 end
