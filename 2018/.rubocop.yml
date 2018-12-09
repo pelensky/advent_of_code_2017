@@ -1,4 +1,4 @@
 Documentation:
     Enabled: false
 Metrics/BlockLength:
-  ExcludedMethods: ['describe', 'context', 'it']
+  ExcludedMethods: ['describe', 'context', 'it', 'expect']
