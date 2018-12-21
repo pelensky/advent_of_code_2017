@@ -17,7 +17,7 @@ class ChronalCoordinates
     highest = find_highest_coordinates(coordinates_list)
     lowest = find_lowest_coordinates(coordinates_list)
     grid = Array.new(highest[1] - lowest[1] + 1) {
-      Array.new(highest[0] - lowest[0] + 1) {[]}
+      Array.new(highest[0] - lowest[0] + 1) {{}}
     }
     {
       x_offset: lowest[0],

@@ -32,16 +32,17 @@ RSpec.describe ChronalCoordinates do
 
   it 'plots the coordinates' do
     result = [
-      ['COORDINATE 0', [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], 'COORDINATE 2'],
-      [[], [], 'COORDINATE 3', [], [], [], [], []],
-      [[], [], [], [], 'COORDINATE 4', [], [], []],
-      ['COORDINATE 1', [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], 'COORDINATE 5']
+      ['COORDINATE 0', {}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}, 'COORDINATE 2'],
+      [{}, {}, 'COORDINATE 3', {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, 'COORDINATE 4', {}, {}, {}],
+      ['COORDINATE 1', {}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}, 'COORDINATE 5']
     ]
     expect(chronal_coordinates.plot(coordinates)[:grid]).to eq result
   end
+
 end
