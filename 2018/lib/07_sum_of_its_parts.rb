@@ -19,7 +19,5 @@ class SumOfItsParts
       part[5],
       part[-12]
     ]
-
   end
-
 end
