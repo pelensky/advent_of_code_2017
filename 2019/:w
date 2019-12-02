@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+require 'utils'
+
+class TyrannyOfTheRocket
+  def find_total_fuel_required
+    modules = Utils.read_integers_from_file('./input/01_tyranny_of_the_rocket.txt')
+    mass = modules.map(&find_fuel_required)
+    mass.inject(0, :+)
+  end
+
+  def find_fuel_required(mass)
+    (mass / 3) - 2
+  end
+end
